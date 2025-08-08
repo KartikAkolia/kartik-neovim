@@ -1,7 +1,7 @@
 return {
   -- Icons (used by UIs)
   { "nvim-tree/nvim-web-devicons", lazy = true },
-
+  { "echasnovski/mini.icons", lazy = true },
   -- Theme
   {
     "lunarvim/synthwave84.nvim",
@@ -10,11 +10,9 @@ return {
       vim.cmd.colorscheme("synthwave84")
     end,
   },
-
   -- Snacks (dashboard, bigfile, notifier)
   {
     "folke/snacks.nvim",
-    event = "VimEnter",  -- defer until UI is ready
     priority = 1000,
     opts = {
       dashboard = {
@@ -34,14 +32,6 @@ return {
       bigfile = { enabled = true },
       notifier = { enabled = true },
     },
-    -- Auto-open dashboard on empty start
-    init = function()
-      if vim.fn.argc(-1) == 0 then
-        vim.schedule(function()
-          pcall(function() require("snacks.dashboard").open() end)
-        end)
-      end
-    end,
+    -- Removed problematic auto-open dashboard init function
   },
 }
-
