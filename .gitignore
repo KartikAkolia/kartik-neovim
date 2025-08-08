@@ -1,0 +1,35 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Swap, backup, undo, sessions
+*.swp
+*.swo
+*.swm
+*.tmp
+*.bak
+*.old
+*.orig
+*.rej
+*~
+Session.vim
+.netrwhist
+
+# Logs
+log/
+*.log
+
+# lazy.nvim state & cache (ignore), but keep lockfile
+lazy.nvim/
+!lazy-lock.json
+
+# Mason binaries and packages (optional to ignore)
+mason/bin/
+mason/packages/
+
+# Treesitter parsers (optional to ignore)
+parser/
+
+# Plugin caches
+.cache/
+
