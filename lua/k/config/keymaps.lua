@@ -1,25 +1,33 @@
 local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
 
 -- Core commands
-map("n", "<leader>qq", ":qa!<CR>", opts)
-map("n", "<leader>e", ":edit %:p<CR>", opts)
-map("n", "<leader>bd", ":bdelete<CR>", opts)
+map("n", "<leader>qq", ":qa!<CR>", { desc = "Quit all", noremap = true, silent = true })
+map("n", "<leader>e", ":edit %:p<CR>", { desc = "Edit current file", noremap = true, silent = true })
+map("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer", noremap = true, silent = true })
 
--- Dashboard (only mapping, no `g` binding)
-map("n", "<leader>h", function()
-  vim.cmd("enew")
-  vim.schedule(function()
-    pcall(function() require("snacks.dashboard").open() end)
-  end)
-end, { desc = "Dashboard" })
+-- Dashboard (simple new buffer)
+map("n", "<leader>h", "<cmd>enew<cr>", { desc = "New buffer" })
 
 -- Telescope
-map("n", "<leader>ff", function() require("telescope.builtin").find_files() end, { desc = "Find files" })
-map("n", "<leader>fg", function() require("telescope.builtin").live_grep() end, { desc = "Grep" })
-map("n", "<leader>/", function() require("telescope.builtin").live_grep() end, { desc = "Search in files" })
-map("n", "<leader>sr", function() require("telescope.builtin").resume() end, { desc = "Search resume" })
-map("n", "<leader>fb", function() require("telescope.builtin").buffers() end, { desc = "Buffers" })
+map("n", "<leader>ff", function() 
+  require("telescope.builtin").find_files() 
+end, { desc = "Find files" })
+
+map("n", "<leader>fg", function() 
+  require("telescope.builtin").live_grep() 
+end, { desc = "Grep" })
+
+map("n", "<leader>/", function() 
+  require("telescope.builtin").live_grep() 
+end, { desc = "Search in files" })
+
+map("n", "<leader>sr", function() 
+  require("telescope.builtin").resume() 
+end, { desc = "Search resume" })
+
+map("n", "<leader>fb", function() 
+  require("telescope.builtin").buffers() 
+end, { desc = "Buffers" })
 
 -- Neo-tree
 map("n", "<leader>tt", "<cmd>Neotree toggle<cr>", { desc = "Toggle Neo-tree" })
@@ -31,4 +39,26 @@ map("n", "<leader>xd", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnost
 -- Undotree
 map("n", "<F5>", "<cmd>UndotreeToggle<cr>", { desc = "Undotree" })
 
--- Clipboard images in Markdown (defined in clipboard plugin spec)
+-- Additional useful keymaps
+-- Better window navigation
+map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
+-- Resize with arrows
+map("n", "<C-Up>", ":resize +2<CR>", { desc = "Increase window height" })
+map("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
+map("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
+map("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
+
+-- Better indenting
+map("v", "<", "<gv", { desc = "Indent left" })
+map("v", ">", ">gv", { desc = "Indent right" })
+
+-- Move text up and down
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move text down" })
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move text up" })
+
+-- Clear search highlighting
+map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlighting" })
