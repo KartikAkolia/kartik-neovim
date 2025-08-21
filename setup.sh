@@ -17,13 +17,22 @@ NVIM_CONFIG_DIR="$HOME/.config/nvim"
 GITHUB_DIR="$HOME/kartik-neovim"
 BACKUP_DIR="$HOME/.config/nvim-backup-$(date +%Y%m%d_%H%M%S)"
 
-# Check if we're in the right directory
-if [[ ! -d "$(pwd)" ]]; then
-    echo -e "${RED}Error: Script must be run from within the kartik-neovim directory${RC}"
+# Determine the correct script directory
+SCRIPT_DIR="$HOME/kartik-neovim"
+
+# Check if the kartik-neovim directory exists
+if [[ ! -d "$SCRIPT_DIR" ]]; then
+    echo -e "${RED}Error: $SCRIPT_DIR directory not found${RC}"
+    echo -e "${YELLOW}Please make sure your GitHub repository is cloned to $SCRIPT_DIR${RC}"
     exit 1
 fi
 
-SCRIPT_DIR=$(pwd)
+# Check if we're running from the right directory
+if [[ "$(pwd)" == "$NVIM_CONFIG_DIR" ]]; then
+    echo -e "${YELLOW}Detected script running from config directory, using $SCRIPT_DIR as source${RC}"
+elif [[ "$(pwd)" != "$SCRIPT_DIR" ]]; then
+    echo -e "${YELLOW}Script not running from kartik-neovim directory, using $SCRIPT_DIR as source${RC}"
+fi
 
 echo -e "${YELLOW}Setting up KANVIM configuration...${RC}"
 
